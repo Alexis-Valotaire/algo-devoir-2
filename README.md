@@ -6,7 +6,7 @@
 **TO DO**  
 - [ ]  Question 1   
 - [ ]  Question 2  
-- [x]  Question 3  **Alexis**  
+- [ ]  Question 3  **Alexis**  
 - [ ]  Question 4  **Alexis**  
 - [ ]  Question 5   
 - [ ]  Question 6  
