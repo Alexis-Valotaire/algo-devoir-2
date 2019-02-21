@@ -1,6 +1,7 @@
 # algo-devoir-2  
-Team members :  
+**Team members :  **
 -Alexis  
 -Jérémy  
 -Jean-Philippe  
+**TO DO**
 
