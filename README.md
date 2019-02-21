@@ -9,5 +9,5 @@
 - [ ]  Question 3  **Alexis**  
 - [ ]  Question 4  **Alexis**  
 - [ ]  Question 5   
-- [ ]  Question 6  
+- [ ]  Question 6   
 
