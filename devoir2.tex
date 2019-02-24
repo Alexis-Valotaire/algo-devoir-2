@@ -17,6 +17,7 @@
 \author{Jérémy Bouchard}
 \date{\today}
 
+
 \begin{document}
 
 \begin{titlepage}
@@ -57,7 +58,7 @@ Le théorème sur les récurrences que nous avons vu en classe possède
 une version plus simple dans le cas où la fonction f(n) est un polynôme.
 Lorsque la récurrence est de la forme:
 \begin{align*}
-	T(n) = aT\Big(\frac{n}{b} + cn^k\Big)
+	T(n) = aT\Big(\frac{n}{b}\Big) + cn^k
 \end{align*}
 
 où c et k sont des constantes réelles positives, alors la solution est
@@ -74,6 +75,93 @@ Nous avons vu en classe la démonstration du premier cas (où  \(a > b^k\)
 ).
 Utilisez le théorème sur les récurrences vu en classe pour démontrer les
 deux autres cas.
+
+
+\subsection*{Cas 2:}
+
+Nous voulons démonter le cas où:
+\begin{align*}
+	a = b^k
+\end{align*}
+
+\noindent Pour ce faire, on commence par mettre le tout en 
+\(  log_b\), ce qui donne: 
+\begin{align*}
+	 log_b(a) = log_b(b^k)
+\end{align*}
+
+Nous savons aussi qu'un log en base `X` de `X` équivaut à 1, donc:
+\begin{align*}
+	 log_b(a) = k
+\end{align*}
+
+Donc, on peut dire que:
+\begin{align*}
+	 n^k = n^{log_b(a)}
+\end{align*}
+
+Ainsi, nous satisfaisons la condition du cas 2 du théorème de récurrence, qui est:
+\begin{align*}
+	f(n) = \Theta\big(n^{log_b(a)} \: \big)
+\end{align*}
+
+Donc, par le fait même, on peut dire que:
+\begin{align*}
+	T(n) = \Theta\big(n^{log_b(a)} \: lg \: n \: \big) = \Theta\big(n^k \: lg \: n \: \big)
+\end{align*}
+
+
+\subsection*{Cas 3:}
+
+Pour ce cas, nous avons deux conditions à satisfaire:
+    \begin{enumerate}[label=(\alph*)]
+      \item  il existe \( \epsilon > 0 \) tel que \( f(n) = \Omega\big(n^{log_ba+\epsilon}  \big) \)
+      \item il existe \( c < 1 \) tel que \(af(n/b) \leq cf(n) \)
+    \end{enumerate}
+
+
+\subsubsection*{Condition a:}
+
+Comme dans le cas 2, nous pouvons dire:
+\begin{align*}
+	a < b^k =  log_b(a) <  k
+\end{align*}
+
+Nous pouvons aussi dire que:
+\begin{align*}
+	log_b(a) <  k = 0 < -log_b(a) + k
+\end{align*}
+
+On peut alors supposer que:
+\begin{align*}
+	\epsilon = -log_b(a) + k
+\end{align*}
+
+Si on isole la valeur `K`, nous obtenons:
+\begin{align*}
+	k = log_b(a) + \epsilon
+\end{align*}
+
+Nous pouvons alors dire que:
+\begin{align*}
+	n^k = n ^{log_b(a) + \epsilon}
+\end{align*}
+
+Ainsi, nous respectons la première condition qui dit qu'il existe \( \epsilon > 0 \) tel que \( f(n) = \Omega\big(n^{log_ba+\epsilon}  \big) \)
+
+
+\subsubsection*{Condition b:}
+En divisant toute l'équivalence par \(b^k\), nous obtenons:
+\begin{align*}
+	a < b^k =  \frac{a}{b^k} < 1
+\end{align*}
+
+Nous pouvons alors supposer que:
+\begin{align*}
+	c =  \frac{a}{b^k}
+\end{align*}
+
+Ainsi, nous respection  la deuxième condition qui dit qu'il existe  \( c < 1 \) tel que \( af(n/b) \leq cf(n) \)
 
 
 \newpage
@@ -135,5 +223,52 @@ prennent un temps constant. Expliquez le lien entre votre algorithme et l’algo
 
 \section*{Question 6}
 Soit \(X[1 \dots n]\) et \(Y [1 \dots n]\) deux tableaux, chacun contenant \(n\) nombres déjà triés. Donnez un algorithme diviser-pour-régner pour trouver le médian des \(2n\) éléments présents dans les tableaux \(X\) et \(Y\). Le temps d’exécution de votre algorithme doit être dans \(\Theta (log \: n)\) en pire cas.
+
+\begin{flushleft}
+L'algorithme suivant trouve la médiane de deux tableaux de même taille (taille `n`) de nombres triés. Il est à noter que la fonction `Mediane` utilisée aux lignes 7 et 8 est une fonction qui s'exécute en temps constant qui retourne la médiane d'un tableau.
+\end{flushleft}
+
+
+\begin{algorithm}[H]
+      \KwData{\( X[1 \cdot\cdot\cdot  n], Y[1 \cdot\cdot\cdot  n], entier \: n \)}
+      \KwResult{réel med}
+      	\If{ \(n = 1\)}{
+      		\Return \(  \big( \frac{X[1] + Y[1]}{2} \big) \) \
+      	}
+      	
+      	\If{ \(n = 2\)}{
+      		\Return \(  \big( \frac{ max(X[1], Y[1]) + min(X[2], Y[2])   }{2} \big) \) \
+      	}
+      	
+      	\(medX \gets Mediane(X[1 \cdot\cdot\cdot  n]) \) \;
+      	\(medY \gets Mediane(Y[1 \cdot\cdot\cdot  n]) \) \;
+      	
+      	\If{\(medX = medY\)}{
+      		\Return medX
+      	}
+      	
+      	\eIf{\(medX < medY\)}
+      	{
+      		\eIf{\( n\bmod  2 = 0\)}
+      		{
+      			\Return TrouverMédiane(X[\( \frac{n}{2} +1\) ...  n], Y[1 ...  \( \frac{n}{2} -1\)], \( \frac{n}{2} +1\))
+      		}
+      		{
+      			\Return TrouverMédiane(X[\( \frac{n}{2}\) ...  n], Y[1 ...  \( \frac{n}{2}\)], \( \frac{n}{2}\))
+      		}
+      	}
+      	{
+      		      		\eIf{\( n\bmod  2 = 0\)}
+      		{
+      			\Return TrouverMédiane(X[1 ...  \( \frac{n}{2} -1\)], Y[\( \frac{n}{2} +1\) ...  n], \( \frac{n}{2} +1\))
+      		}
+      		{
+      			\Return TrouverMédiane(X[\( \frac{n}{2}\) ...  n], Y[1 ...  \( \frac{n}{2}\)], \( \frac{n}{2}\))
+      		}
+      	}
+      
+
+      \caption{TrouverMédiane}
+\end{algorithm}
 
 \end{document}
