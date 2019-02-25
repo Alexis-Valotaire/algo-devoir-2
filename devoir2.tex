@@ -23,22 +23,22 @@
 \begin{titlepage}
 	\doublespacing
 	\centering
-	
+
 	UNIVERSITÉ DU QUÉBEC À CHICOUTIMI \\
-	
+
 	\vspace{4.7cm}
-	
+
 	DEVOIR 2 \\
-	
+
 	\vspace{4.7cm}
-	
+
 	PAR \\
 	JÉRÉMY BOUCHARD (BOUJ08019605) \\
 	JEAN-PHILIPPE SAVARD (SAVJ04079609) \\
 	ALEXIS VALOTAIRE (VALA09129509) \\
-	
+
 	\vspace{4.7cm}
-	
+
 	DEVOIR PRÉSENTÉ À \\
 	M. FRANÇOIS LEMIEUX \\
 	DANS LE CADRE DU COURS D'ALGORITHMIQUE (8INF433)
@@ -46,7 +46,7 @@
 
 \newpage
 
-\textit{Note :} Le code source \LaTeX \:est disponible à l'URL suivant : \\ 
+\textit{Note :} Le code source \LaTeX \:est disponible à l'URL suivant : \\
 \url{https://github.com/AlexisCode101/algo-devoir-2}
 
 \newpage
@@ -64,12 +64,12 @@ Lorsque la récurrence est de la forme:
 où c et k sont des constantes réelles positives, alors la solution est
 donnée par:
 
-\[T(n) \begin{cases} 
+\[T(n) \begin{cases}
       \Theta\big(n^{log_ba}\big) & \text{si } a>b^k \\
       \Theta\big(n^klg \: n\big) & \text{si } a=b^k \\
       \Theta\big(n^k\big) & \text{si } a<b^k
    \end{cases}
-\]	
+\]
 
 Nous avons vu en classe la démonstration du premier cas (où  \(a > b^k\)
 ).
@@ -84,8 +84,8 @@ Nous voulons démonter le cas où:
 	a = b^k
 \end{align*}
 
-\noindent Pour ce faire, on commence par mettre le tout en 
-\(  log_b\), ce qui donne: 
+\noindent Pour ce faire, on commence par mettre le tout en
+\(  log_b\), ce qui donne:
 \begin{align*}
 	 log_b(a) = log_b(b^k)
 \end{align*}
@@ -178,7 +178,7 @@ Considérez le graphe dirigé de la figure suivante:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=12cm]{q3} 
+	\includegraphics[width=12cm]{q3}
 \end{figure}
 
 Montrez le contenu du tableau \(D\), de l’ensemble \(S\) ainsi que la valeur de la variable \(v\) après chacune des itérations de l’algorithme. Décrivez toutes les étapes de l’algorithme Dijkstra. Utilisez le noeud 1 comme source.
@@ -209,15 +209,115 @@ Résoudre les récurrences suivantes. \\
 \section*{Question 5}
 Considérez la matrice suivante
 \begin{align*}
-	F = 
+	F =
 	\begin{pmatrix}
 		0 & 1 \\
-		1 & 1 
+		1 & 1
 	\end{pmatrix}
 \end{align*}
 
 Soit \(i\) et \(j\), deux entiers. Quel est le produit du vecteur (\(i\), \(j\)) et de la matrice \(F\)? Qu’arrive-t-il si i et j sont deux nombres consécutifs de la suite de Fibonacci? Utilisez cette idée pour concevoir un algorithme diviser-pour-régner capable de calculer le nième nombre de Fibonacci en temps \(\Theta (log \: n)\) en considérant (faussement) que les multiplications
-prennent un temps constant. Expliquez le lien entre votre algorithme et l’algorithme fib3 du devoir 1.
+prennent un temps constant. Expliquez le lien entre votre algorithme et l’algorithme fib3 du devoir 1. \newline
+
+Il est possible de constater que le résultat de la multiplication suivante :
+\begin{align*}
+	\begin{pmatrix}
+		f_{n-1} & f_{n-2}
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f_{n-1} & f_{n-1} + f_{n-2}
+	\end{pmatrix}
+\end{align*}
+
+Il est possible de se rapeller l'identité de la séquence de Fibbonaci :
+\[ f_{n} = f_{n-1} + f_{n-2} \]
+
+Il est donc possible de remplacer une identité dans la première équation :
+\begin{align*}
+	\begin{pmatrix}
+		f_{n-1} & f_{n-2}
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f_{n-1} & f_{n}
+	\end{pmatrix}
+\end{align*}
+
+On remarque qu'on peut chaîner la multiplication de la matrice. On observe que l'indice de la séquence de Fibonacci augmente à chaque itération. On peut observer cela grâce aux équations suivantes.
+\begin{align*}
+	\begin{pmatrix}
+		f_{0} & f_{1}
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f_{0} & f_{0} + f_{1}
+	\end{pmatrix}
+\end{align*}
+
+\begin{align*}
+	\begin{pmatrix}
+		f_{1} & f_{2}
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f_{1} & f_{1} + f_{2}
+	\end{pmatrix}
+\end{align*}
+
+En chaînant les multiplications par la matrice, on constate la relation suivante.
+\begin{align*}
+	\begin{pmatrix}
+		f_{0} & f_{1}
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	^n
+	=
+	\begin{pmatrix}
+		f_{n} & f_{n+1}
+	\end{pmatrix}
+\end{align*}
+
+En remplacant \( f_{0} \) et \( f_{1} \) par leurs valeurs respectives.
+\begin{align*}
+	\begin{pmatrix}
+		0 & 1
+	\end{pmatrix}
+	\cdot
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	^n
+	=
+	\begin{pmatrix}
+		f_{n} & f_{n+1}
+	\end{pmatrix}
+\end{align*}
 
 \newpage
 
@@ -235,18 +335,18 @@ L'algorithme suivant trouve la médiane de deux tableaux de même taille (taille
       	\If{ \(n = 1\)}{
       		\Return \(  \big( \frac{X[1] + Y[1]}{2} \big) \) \
       	}
-      	
+
       	\If{ \(n = 2\)}{
       		\Return \(  \big( \frac{ max(X[1], Y[1]) + min(X[2], Y[2])   }{2} \big) \) \
       	}
-      	
+
       	\(medX \gets Mediane(X[1 \cdot\cdot\cdot  n]) \) \;
       	\(medY \gets Mediane(Y[1 \cdot\cdot\cdot  n]) \) \;
-      	
+
       	\If{\(medX = medY\)}{
       		\Return medX
       	}
-      	
+
       	\eIf{\(medX < medY\)}
       	{
       		\eIf{\( n\bmod  2 = 0\)}
@@ -266,7 +366,7 @@ L'algorithme suivant trouve la médiane de deux tableaux de même taille (taille
       			\Return TrouverMédiane(X[\( \frac{n}{2}\) ...  n], Y[1 ...  \( \frac{n}{2}\)], \( \frac{n}{2}\))
       		}
       	}
-      
+
 
       \caption{TrouverMédiane}
 \end{algorithm}
