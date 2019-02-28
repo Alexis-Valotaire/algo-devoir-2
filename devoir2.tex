@@ -331,7 +331,7 @@ Montrez le contenu du tableau \(D\), de l’ensemble \(S\) ainsi que la valeur d
 \begin{table}[H]
 \centering
 \begin{tabular}{c|ccc}
-Étape     & v & N-S                                  & D \\ \hline
+Étape     & v & S                                  & D \\ \hline
     0     & - &  \(\lbrace 2,3,4,5,6,7,8 \rbrace\)   & \([8,10,\infty,\infty,\infty,\infty,\infty]\)  \\
     1     & 2 &  \(\lbrace 3,4,5,6,7,8 \rbrace\)     & \([8,9,16,18,\infty,\infty,\infty]\)  \\
     2     & 3 &  \(\lbrace 4,5,6,7,8 \rbrace\)       & \([8,9,16,18,\infty,\infty,\infty]\)  \\ 
@@ -341,6 +341,20 @@ Montrez le contenu du tableau \(D\), de l’ensemble \(S\) ainsi que la valeur d
     6     & 7 &  \(\lbrace 8 \rbrace\)   			 & \([8,9,16,17,24,25,32]\)  \\
 \end{tabular}
 \end{table}
+
+\textbf{Étape 0 :} Seul la distance du noeud 1 aux noeuds 2 et 3 sont connus, les distances sont placées dans le tableau D. Le noeud 2 possède la distance la plus courte de D, v est donc égal au noeud 2. \\
+
+\textbf{Étape 1 :} À l'aide du noeud 2, nous trouvons la distance entre le noeud 1 et les noeuds 4 et 5. Le noeud 3 possède la distance la plus courte de D en excluant les variables v précédentes, v est donc égal au noeud 3. \\
+
+\textbf{Étape 2 :} Rien ne change dans le tableau D puisque les distances apportées par le noeud 3 sont plus grandes que ceux apportées par le noeud 2. Le noeud 4 possède la distance la plus courte de D en excluant les variables v précédentes, v est donc égal au noeud 4. \\
+
+\textbf{Étape 3 :} À l'aide du noeud 4, nous trouvons un chemin plus court jusqu'au noeud 5 ainsi que les distances des noeuds 6 et 7. Le noeud 4 possède la distance la plus courte de D en excluant les variables v précédentes, v est donc égal au noeud 5. \\
+
+\textbf{Étape 4 :} Rien ne change dans le tableau D puisque les distances apportées par le noeud 5 sont plus grandes que ceux apportées par le noeud 4. Le noeud 6 possède la distance la plus courte de D en excluant les variables v précédentes, v est donc égal au noeud 6. \\
+
+\textbf{Étape 5 :} À l'aide du noeud 6, nous trouvons un chemin plus court jusqu'au noeud 7 ainsi que la distance jusqu'au noeud 8. Le noeud 7 possède la distance la plus courte de D en excluant les variables v précédentes, v est donc égal au noeud 7. \\
+
+\textbf{Étape 6 :} Rien ne change dans le tableau D puisque les distances apportées par le noeud 7 sont plus grandes que ceux apportées par le noeud 6. L'algorithme s'arrête donc ici car toutes les plus courtes distances ont été trouvées. \\
 
 \newpage
 
