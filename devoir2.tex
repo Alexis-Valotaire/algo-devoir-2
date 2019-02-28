@@ -187,30 +187,134 @@ Prenons par exemple le graphe pour la question 3. Utilisons-le pour faire une d�
 Le tableau suivant montre les chemins entre le différents noeuds au début, en prenant le noeud 1 comme étant celui de départ.
 
 \begin{center}
- \begin{tabular}{||c c||}
- \hline
- Noeud & Chemin \\ [0.5ex]
- \hline\hline
- 1 & 1 \\
- \hline
- 2 & - \\
- \hline
- 3 & - \\
- \hline
- 4 & - \\
- \hline
- 5 & -  \\
- \hline
- 6 & -  \\
- \hline
- 7 & -  \\
- \hline
- 8 & -  \\ [1ex]
- \hline
-\end{tabular}
+	\begin{tabular}{||c c||}
+		\hline
+		Noeud & Chemin \\ [0.5ex]
+		\hline\hline
+		1 & 1 \\
+		\hline
+		2 & - \\
+		\hline
+		3 & - \\
+		\hline
+		4 & - \\
+		\hline
+		5 & -  \\
+		\hline
+		6 & -  \\
+		\hline
+		7 & -  \\
+		\hline
+		8 & -  \\ [1ex]
+		\hline
+	\end{tabular}
 \end{center}
 
-Nous calculons ensuite le chemin vers les distances des noeuds adjacents à 1.
+Nous calculons ensuite le chemin vers les distances des noeuds adjacents à 1. La distance minimale a 2 doit être mise à jour, pusiqu'elle est présentemement infini, et qu'infini est plus petit que 8. On modifie donc le tableau pour que celui-ci ressemble à ceci.
+
+\begin{center}
+	\begin{tabular}{||c c||}
+		\hline
+		Noeud & Chemin \\ [0.5ex]
+		\hline\hline
+		1 & 1 \\
+		\hline
+		2 & 1-2 \\
+		\hline
+		3 & - \\
+		\hline
+		4 & - \\
+		\hline
+		5 & -  \\
+		\hline
+		6 & -  \\
+		\hline
+		7 & -  \\
+		\hline
+		8 & -  \\ [1ex]
+		\hline
+	\end{tabular}
+\end{center}
+
+De manière analogue, pour le noeud 3.
+
+\begin{center}
+	\begin{tabular}{||c c||}
+		\hline
+		Noeud & Chemin \\ [0.5ex]
+		\hline\hline
+		1 & 1 \\
+		\hline
+		2 & 1-2 \\
+		\hline
+		3 & 1-3 \\
+		\hline
+		4 & - \\
+		\hline
+		5 & -  \\
+		\hline
+		6 & -  \\
+		\hline
+		7 & -  \\
+		\hline
+		8 & -  \\ [1ex]
+		\hline
+	\end{tabular}
+\end{center}
+
+On se déplace ensuite au noeud 2 comme étant le noeud courant. En visitant ses noeuds adjacents, on voit que la distance vers le noeud 4 était infini. Pusiqu'il existe un lien qui nous permet de nous déplacer vers ce noeud à partir de 2, mettons le à jour. Ici, puisque nous sommes au noeud 2 comme noeud courant, le chemin vers 4 devient le chemin vers 2 plus le chemin de 4 à partir de 2. De manière analogue, nous obtenons aussi le chemin pour le noeud 5.
+
+\begin{center}
+	\begin{tabular}{||c c||}
+		\hline
+		Noeud & Chemin \\ [0.5ex]
+		\hline\hline
+		1 & 1 \\
+		\hline
+		2 & 1-2 \\
+		\hline
+		3 & 1-3 \\
+		\hline
+		4 & 1-2-4 \\
+		\hline
+		5 & 1-2-5  \\
+		\hline
+		6 & -  \\
+		\hline
+		7 & -  \\
+		\hline
+		8 & -  \\ [1ex]
+		\hline
+	\end{tabular}
+\end{center}
+
+Pour ce qui est du noeud 3, par contre, nous constatons que la distance entre du noeud de départ au noeud courant (2) plus la distance entre celui-ci et le noeud 3 est inférieure à celle dans le tableau de Djikstra. Il faut donc le mettre à jour. Le chemin vers le noeud 3 devient donc le chemin du noeud de départ vers le noeud courant plus le chemin du noeud cournat vers le noeud 3. Le tableau devient donc ceci.
+
+\begin{center}
+	\begin{tabular}{||c c||}
+		\hline
+		Noeud & Chemin \\ [0.5ex]
+		\hline\hline
+		1 & 1 \\
+		\hline
+		2 & 1-2 \\
+		\hline
+		3 & 1-2-3 \\
+		\hline
+		4 & 1-2-4 \\
+		\hline
+		5 & 1-2-5  \\
+		\hline
+		6 & -  \\
+		\hline
+		7 & -  \\
+		\hline
+		8 & -  \\ [1ex]
+		\hline
+	\end{tabular}
+\end{center}
+
+Il ne nous reste donc qu'à appliquer cet algorithme de Djikstra modifié pour obtenir le tableau des chemins, ce qui est une modification triviale de l'algorithme de Djikstra. En effet, nous n'avons qu'à construire un tableau analogue et le mettre à jour que lorsque un chemin est plsu petit, comme dans l'algorithme clasique de Djikstra.
 
 \newpage
 
