@@ -9,6 +9,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{float} % here for H placement parameter
+\usepackage{qtree}
+\usepackage{amsfonts}
 \graphicspath{{figures/}}
 
 \setlength{\parindent}{0pt}
@@ -169,7 +171,46 @@ Ainsi, nous respection  la deuxième condition qui dit qu'il existe  \( c < 1 \)
 \section*{Question 2}
 L’algorithme de Dijkstra que nous avons vu en classe, nous permet
 d’obtenir la longueur du plus court chemin entre un noeud source et
-tous les autres noeuds mais il ne donne pas les chemins eux-mêmes. Comment modifieriez-vous cet algorithme afin d’obtenir cette information? Notez que la modification est mineure si vous choisissez la bonne façon de représenter les chemins.
+tous les autres noeuds mais il ne donne pas les chemins eux-mêmes. Comment modifieriez-vous cet algorithme afin d’obtenir cette information? Notez que la modification est mineure si vous choisissez la bonne façon de représenter les chemins. \newline
+
+Il est possible de modifier l'algorithme de Djikstra facilement pour réaliser cela. En effet, nous n'avons qu'à tenir une liste des chemins vers chaque noeud à partir de noeud de départ. \newline
+
+Nous n'avons qu'à modifier la valeur de ces chemins chaque fois que nous modifions la distance minimal dans l'algorithme. En effet, à chaque fois que nous modifions la distance minimale dans le tableau des distances de Djikstra, nous n'avons qu'à modifier les tableaux du chemin en la remplacant par la distance du noeud courant vers le noeud calculé. \newline
+
+Prenons par exemple le graphe pour la question 3. Utilisons-le pour faire une démonstration, en supposant que celui-ci n'est pas orienté.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{figures/q3}
+\end{figure}
+
+Le tableau suivant montre les chemins entre le différents noeuds au début, en prenant le noeud 1 comme étant celui de départ.
+
+\begin{center}
+ \begin{tabular}{||c c||}
+ \hline
+ Noeud & Chemin \\ [0.5ex]
+ \hline\hline
+ 1 & 1 \\
+ \hline
+ 2 & - \\
+ \hline
+ 3 & - \\
+ \hline
+ 4 & - \\
+ \hline
+ 5 & -  \\
+ \hline
+ 6 & -  \\
+ \hline
+ 7 & -  \\
+ \hline
+ 8 & -  \\ [1ex]
+ \hline
+\end{tabular}
+\end{center}
+
+Nous calculons ensuite le chemin vers les distances des noeuds adjacents à 1.
 
 \newpage
 
@@ -190,19 +231,65 @@ Résoudre les récurrences suivantes. \\
 
 \textbf{a) } \(T(n)=2T\big(\frac{n}{2}\big)+1\) \\
 
+\(a=2, \quad b=2, \quad n^{\log_ba} = n^{\log_22}=n \text{ et } f(n) = 1\) \\
+
+Cas 1 : \(T(n) = \Theta(n^{\log_ba}) = \Theta(n^{\log_22}) = \Theta(n) \) \\
+
+Car il existe un \(\epsilon>0\) tel que \(1 = O(n^{1-\epsilon}) \) par exemple \(\epsilon=0.9\) \\
+
 \textbf{b) } \(T(n)=T\big(\frac{9n}{10}\big)+n\) \\
+
+\(a=1, \quad b=\frac{10}{9}, \quad n^{\log_ba} = n^{\log_{\frac{10}{9}}1}=n^0=1 \text{ et } f(n) = n\) \\
+
+Cas 3 : \(T(n)=\Theta(f(n))= \Theta(n) \) \\
+
+(i) il existe un \(\epsilon>0\) tel que \(n = \Omega(n^{0+\epsilon}) \) par exemple \(\epsilon=1\) \\
+(ii) il existe un \(c < 1\) tel que \( \frac{9n}{10} \leq cn \) par exemple \(c=\frac{9}{10}\) \\
 
 \textbf{c) } \(T(n)=16T\big(\frac{n}{4}\big)+n^2\) \\
 
+\(a=16, \quad b=4, \quad n^{\log_ba} = n^{\log_416}=n \text{ et } f(n) = n^2\) \\
+
+Cas 2 : \(T(n) = \Theta(n^{\log_ba}lg \, n) = \Theta(n^{\log_416}lg \, n) = \Theta(n^2lg \, n) \) \\
+
+Car \(n^2 = \Theta(n^2) \) \\
+
 \textbf{d) } \(T(n)=7T\big(\frac{n}{3}\big)+n^2\) \\
+
+\(a=7, \quad b=3, \quad n^{\log_ba} = n^{\log_37}=n^{1.77} \text{ et } f(n) = n^2\) \\
+
+Cas 3 : \(T(n)=\Theta(f(n))= \Theta(n^2) \) \\
+
+(i) il existe un \(\epsilon>0\) tel que \(n^2 = \Omega(n^{1.77+\epsilon}) \) par exemple \(\epsilon=0.22\) \\
+(ii) il existe un \(c < 1\) tel que \( 7 \big(\frac{n}{3} \big)^2 \leq cn^2 \) par exemple \(c=\frac{7}{9}\) \\
 
 \textbf{e) } \(T(n)=7T\big(\frac{n}{2}\big)+n^2\) \\
 
+\(a=7, \quad b=2, \quad n^{\log_ba} = n^{\log_27}=n^{2.81} \text{ et } f(n) = n^2\) \\
+
+Cas 1 : \(T(n) = \Theta(n^{\log_ba}) = \Theta(n^{\log_27}) = \Theta(n^{2.81}) \) \\
+
+Car il existe un \(\epsilon>0\) tel que \(n^2 = O(n^{2.81-\epsilon}) \) par exemple 0 \\
+
 \textbf{f) } \(T(n)=2T\big(\frac{n}{4}\big)+\sqrt{n}\) \\
+
+\(a=2, \quad b=4, \quad n^{\log_ba} = n^{\log_42}=n^{\frac{1}{2}} \text{ et } f(n) = n^{\frac{1}{2}}\) \\
+
+Cas 2 : \(T(n) = \Theta(n^{\log_ba}lg \, n) = \Theta(n^{\log_42}lg \, n) = \Theta(n^{\frac{1}{2}}lg \, n) \) \\
+
+Car \(n^{\frac{1}{2}} = \Theta(n^{\frac{1}{2}}) \) \\
 
 \textbf{g) } \(T(n)=3T\big(\frac{n}{2}\big)+5n\) \\
 
+\(a=3, \quad b=2, \quad n^{\log_ba} = n^{\log_23}=n^{1.58} \text{ et } f(n) = 5n\) \\
+
+Cas 1 : \(T(n) = \Theta(n^{\log_ba}) = \Theta(n^{\log_23}) = \Theta(n^{1.58}) \) \\
+
+Car il existe un \(\epsilon>0\) tel que \(5n = O(n^{1.58-\epsilon}) \) par exemple 0.28 \\
+
 \textbf{h) } \(T(n)=T\big(\frac{n}{2}+5\big)+1\) \\
+
+Le théorème ne s'applique pas puisque la fonction n'est pas de la forme \(aT \big(\frac{n}{b} \big) +f(n)\)
 
 \newpage
 
@@ -216,8 +303,7 @@ Considérez la matrice suivante
 	\end{pmatrix}
 \end{align*}
 
-Soit \(i\) et \(j\), deux entiers. Quel est le produit du vecteur (\(i\), \(j\)) et de la matrice \(F\)? Qu’arrive-t-il si i et j sont deux nombres consécutifs de la suite de Fibonacci? Utilisez cette idée pour concevoir un algorithme diviser-pour-régner capable de calculer le nième nombre de Fibonacci en temps \(\Theta (log \: n)\) en considérant (faussement) que les multiplications
-prennent un temps constant. Expliquez le lien entre votre algorithme et l’algorithme fib3 du devoir 1. \newline
+Soit \(i\) et \(j\), deux entiers. Quel est le produit du vecteur (\(i\), \(j\)) et de la matrice \(F\)? Qu’arrive-t-il si i et j sont deux nombres consécutifs de la suite de Fibonacci? Utilisez cette idée pour concevoir un algorithme diviser-pour-régner capable de calculer le nième nombre de Fibonacci en temps \(\Theta (log \: n)\) en considérant (faussement) que les multiplications prennent un temps constant. Expliquez le lien entre votre algorithme et l’algorithme fib3 du devoir 1. \newline
 
 Il est possible de constater que le résultat de la multiplication suivante :
 \begin{align*}
@@ -318,6 +404,48 @@ En remplacant \( f_{0} \) et \( f_{1} \) par leurs valeurs respectives.
 		f_{n} & f_{n+1}
 	\end{pmatrix}
 \end{align*}
+
+On observe également par multiplication successive de la matrice, les valeurs suivantes.
+\begin{align*}
+	\begin{pmatrix}
+		0 & 1 \\
+		1 & 1
+	\end{pmatrix}
+	^n
+	=
+	\begin{pmatrix}
+		f_{n-1} & f_{n} \\
+		f_{n} & f_{n+1}
+	\end{pmatrix}
+\end{align*}
+
+
+Il ne reste donc qu'à calculer la matrice à la bonne puissance pour obtenir les valeurs de la séquence de Fibonacci. Il ne reste qu'à prouver que l'exponentiation d'une matrice peut se faire en \(\Theta (log \: n)\). \newline
+
+Il est possible de calculer l'exponentiation de la matrice en multipliant les matrices dont l'exposant est divisé en 2 récursivement de la manière suivante. \newline
+
+\Tree[.M^n [.M^{n/2} [.M^{n/4} [.$\cdots$ [.M^2 M^1 M^1 ]
+										 											[.M^2 M^1 M^1 ]]]
+               			 [.M^{n/4} [.$\cdots$ [.M^2 M^1 M^1 ]
+																					[.M^2 M^1 M^1 ]]]]
+        	 [.M^{n/2} [.M^{n/4} [.$\cdots$ [.M^2 M^1 M^1 ]
+																					[.M^2 M^1 M^1 ]]]
+                		 [.M^{n/4} [.$\cdots$ [.M^2 M^1 M^1 ]
+																					[.M^2 M^1 M^1 ]]]]] \newline
+
+ Il est donc possible de voir que l'on divise le problème à chaque étage. La hauteur de l'arbre est donc de \( log_2 (n) \). pusique l'on divise le problème à chaque itération. Puisqu'il faut multiplier la matrice par elle même \( log_2 (n) \) fois et que chaque multiplication ce fait en \(\Theta (1) \), l'algorithme se résoud en \(\Theta (log \: n)\). \newline
+
+Cet algorithme assume que les valeurs de l'exposant soit d'un multiple de 2. Par contre, il est possible d'exprimer n'importe quel nombre comme étant une addition de plusieurs multiples de 2. Cela est possible de la manière suivante.
+
+\[ n = \sum_{p \in P_n}^{} 2^p \]
+\[ p \subset \mathbb{N}_0 \]
+
+On comprend donc que l'exponentiation de la matrice est la suivante.
+
+\[ M^n = \prod_{p \in P_n}^{} M^{2^p} \]
+\[ p \subset \mathbb{N}_0 \]
+
+Pour ce qui est du lien avec fib3 du devoir 1, il s'agit exactement de cet algorithme. Dans le devoir 1, l'algorithme effectuait des itérations en divisant le \( n \) par 2 à chaque itération et en calculant la multiplication de la matrice. La fonction fib3 est donc l'implémentation de cet algorithme.
 
 \newpage
 
