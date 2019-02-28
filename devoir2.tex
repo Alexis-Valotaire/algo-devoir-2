@@ -393,8 +393,25 @@ Car il existe un \(\epsilon>0\) tel que \(5n = O(n^{1.58-\epsilon}) \) par exemp
 
 \textbf{h) } \(T(n)=T\big(\frac{n}{2}+5\big)+1\) \\
 
-Le théorème ne s'applique pas puisque la fonction n'est pas de la forme \(aT \big(\frac{n}{b} \big) +f(n)\)
+Nous voyons que cette fois la formule est de la forme \(T(n) = aT \big(\frac{n}{b}+k \big) + f(n) \) \\
 
+\(a=1, \quad b=2, \quad k=5 \quad et \quad f(n) = 1\) \\
+
+Calculons \(c = \frac{kb}{b-1} = \frac{5*2}{2-1} = 10\) \\
+
+Posons \(S(n) = T(n+c) = T(n+10) \) \\
+
+Nous obtenons alors, 
+\begin{align*}
+	S(n) &= T(\frac{n+10}{2}+5)+1 \\
+	&= T(\frac{n}{2}+10)+1 \\
+	&= S(\frac{n}{2}) + 1
+\end{align*}
+
+Cas 2 : \(S(n) = \Theta(n^{\log_ba}lg \, n) = \Theta(n^{\log_21}lg \, n) = \Theta(lg \, n) \) \\
+En ramenant en \(T(n)\) nous obtenons \(T(n)=\Theta(lg \, (n+10))\) \\
+
+Car \(1 = \Theta(1)\) \\
 \newpage
 
 \section*{Question 5}
